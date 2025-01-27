@@ -24,4 +24,4 @@ Mot de passe: pocketbase
 # Documents
 
 - [Schema MCD base de donnée](./yevent-db-schema.png)
-- [Wireframe de l'application mobile](./yevent-db-schema.png)
+- [Wireframe de l'application mobile](./yevent-wireframe.png)
