@@ -1,5 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, Button } from 'react-native';
+import { dateToFrenchFormat } from '../lib/utils';
+import MDIDateRange from '../assets/mdi--date-range.svg';
+import MDIMapMarker from '../assets/mdi--map-marker.svg';
+import { FlatList } from 'react-native-web';
 
 const ConfirmationScreen = ({ route, navigation }) => {
 
@@ -8,15 +12,27 @@ const ConfirmationScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Confirmation</Text>
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: event.booking.qrCodeLink }} style={styles.qrCodeImage} />
+      <Text style={styles.title}>{event.title}</Text>
+      <View style={styles.detailRow}>
+        <Image source={MDIDateRange} />
+        <Text style={styles.date}>{dateToFrenchFormat(event.startDate)}</Text>
       </View>
-      <Text style={styles.eventText}>Tickets: N°{event.booking.id}</Text>
-      <Text style={styles.eventText}>Event: {event.title}</Text>
-      <Text style={styles.eventText}>Start Date: {event.startDate}</Text>
-      <Text style={styles.eventText}>End Date: {event.endDate}</Text>
-      <Text style={styles.eventText}>Address: {event.address}</Text>
+      <View style={styles.detailRow}>
+        <Image source={MDIMapMarker} />
+        <Text style={styles.date}>{event.address}</Text>
+      </View>
+
+      <FlatList
+        data={event.booking.orderedTickets}
+        style={{ marginTop: 20 }}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => (
+          <View style={styles.imageContainer}>
+            <Text style={styles.eventText}>Ticket: N°{item}</Text>
+            <Image source={{ uri: 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&data='+item }} style={styles.qrCodeImage} />
+          </View>
+        )}
+      />
 
       <View style={styles.buttonContainer}>
         <Button
@@ -58,11 +74,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#000',
     marginTop: 10,
+    marginBottom: 10,
   },
   buttonContainer: {
     marginTop: 'auto',
     width: '100%',
     paddingVertical: 10,
+  },
+  date: {
+    fontSize: 16,
+    fontWeight: 600,
+    color: '#000',
+    textTransform: 'capitalize',
+  },
+  detailRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
 });
 

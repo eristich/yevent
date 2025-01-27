@@ -1,5 +1,8 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, Button } from 'react-native';
+import { dateToFrenchFormat } from '../lib/utils';
+import MDIDateRange from '../assets/mdi--date-range.svg';
+import MDIMapMarker from '../assets/mdi--map-marker.svg';
 
 const EventDetailsScreen = ({ route, navigation }) => {
   // Récupération des paramètres passés via la navigation
@@ -13,8 +16,14 @@ const EventDetailsScreen = ({ route, navigation }) => {
     <View style={styles.container}>
       <Image source={{ uri: image }} style={styles.image} />
       <Text style={styles.title}>{title}</Text>
-      <Text style={styles.date}>Date : {startDate}</Text>
-      <Text style={styles.date}>Adresse : {address}</Text>
+      <View style={styles.detailRow}>
+        <Image source={MDIDateRange} />
+        <Text style={styles.date}>{dateToFrenchFormat(startDate)}</Text>
+      </View>
+      <View style={styles.detailRow}>
+        <Image source={MDIMapMarker} />
+        <Text style={styles.date}>{address}</Text>
+      </View>
       <Text style={styles.description}>{description}</Text>
 
       <View style={styles.buttonContainer}>
@@ -46,12 +55,14 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
-    textAlig: 'left'
+    textAlig: 'left',
+    marginBottom: 20,
   },
   date: {
     fontSize: 16,
+    fontWeight: 600,
     color: '#000',
-    marginTop: 4,
+    textTransform: 'capitalize',
   },
   buttonContainer: {
     marginTop: 'auto',
@@ -61,8 +72,17 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     color: '#000',
-    marginTop: 10,
-    textAlign: 'justify'
+    marginTop: 20,
+    textAlign: 'justify',
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 4,
+    border: '2px solid #ccc',
+  },
+  detailRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
 });
 

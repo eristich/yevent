@@ -1,32 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import UISearchBar from '../components/UISearchBar';
 
 const BookingScreen = ({ navigation }) => {
-
-  const [searchQuery, setSearchQuery] = useState(''); // État pour la barre de recherche
-  const [filteredData, setFilteredData] = useState(ticketList); // État pour les données filtrées
-
-  // Fonction pour filtrer la liste en fonction de la recherche
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    if (query.trim() === '') {
-      setFilteredData(ticketList);
-    } else {
-      const filtered = ticketList.filter((item) =>
-        item.title.toLowerCase().includes(query.toLowerCase())
-      );
-      setFilteredData(filtered);
-    }
-  };
+  const [searchQuery, setSearchQuery] = React.useState(''); // État pour la barre de recherche
+  const [filteredData, setFilteredData] = React.useState(ticketList); // État pour les données filtrées
 
   return (
     <View style={styles.container}>
       {/* Barre de recherche */}
-      <TextInput
-        style={styles.searchBar}
-        placeholder="Rechercher un événement..."
-        value={searchQuery}
-        onChangeText={handleSearch}
+      <UISearchBar
+        placeholder="Rechercher une reservation"
+        onSearch={handleSearch}
       />
 
       {/* Liste des événements */}
